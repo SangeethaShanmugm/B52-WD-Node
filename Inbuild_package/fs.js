@@ -54,8 +54,30 @@ const nicequote = "\nMake everyday a little less ordinarily"
 //     console.log("Deleted successfully")
 // })
 
-fs.readdir("./backup", (err, files) => {
-    console.log("All file name", files)
-})
+// fs.readdir("./backup", (err, files) => {
+//     console.log("All file name", files)
+// })
 
 //delete all files in backup folder
+
+// fs.readdir("./backup", (err, files) => {
+//     console.log("All file name", files)
+//     files.forEach(fileName => {
+//         fs.unlink(`./backup/${fileName}`, (err) => {
+//             console.log("Deleted successfully", fileName)
+//         })
+
+//     })
+// })
+
+//writeFile => callStack => WebApi(whoever finishes writing first) => CallBack Q => Event Loop => CallStack
+
+// fs.writeFile, fs.readFile, fs.appendFile, fs.unlink => async
+// fs.writeFileSync, fs.readFileSync, fs.appendFileSync, fs.unlinkSync = sync
+
+const [, , n] = process.argv
+
+for (let i = 1; i <= n; i++) {
+    fs.writeFileSync(`./backup/note-${i}.txt`, quote2)
+    console.log(`Completed writing ${i}`)
+}

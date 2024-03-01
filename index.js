@@ -101,9 +101,19 @@ app.get('/', (req, res) => {
     res.send('Hello Everyone')
 })
 
+// /products => all the products
+// /products?category=mobile => only mobile products
+// /products?rating=4.5 =< only products with rating 4.5
+// /products?category=accessories&rating=4.5 => filter accessories & filter based on rating 
+
+
+
 //get all products
 app.get('/products', (req, res) => {
-    res.send(products)
+    const { category } = req.query
+    console.log(req.query, category)
+    const result = products.filter((pd) => pd.category === category)
+    res.send(result)
 })
 
 

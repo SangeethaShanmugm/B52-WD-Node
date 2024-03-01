@@ -1,4 +1,8 @@
-const express = require('express')//third party package
+// const express = require('express')//third party package
+// const { MongoClient } = require('mongodb');
+import express from "express";
+import { MongoClient } from "mongodb"
+
 const app = express()
 const PORT = 5000
 
@@ -95,33 +99,66 @@ const products = [
     }
 ]
 
+const MONGO_URL = "mongodb://127.0.0.1:27017"
+
+//"mongodb://localhost:27017"
+
+async function createConnection() {
+    const client = new MongoClient(MONGO_URL)
+    await client.connect()
+    console.log("Mongodb is connected")
+    return client
+}
+
+const client = await createConnection()
+
 //req => what we send to server
 //res => what we receive from server
 app.get('/', (req, res) => {
     res.send('Hello Everyone')
 })
 
-// /products => all the products
-// /products?category=mobile => only mobile products
-// /products?rating=4.5 =< only products with rating 4.5
-// /products?category=accessories&rating=4.5 => filter accessories & filter based on rating 
+// /products => all the products ✅
+// /products?category=mobile => only mobile products ✅
+// /products?rating=4.5 =< only products with rating 4.5  ✅
+// /products?category=accessories&rating=4.5 => filter accessories & filter based on rating   ✅
 
 
 
 //get all products
 app.get('/products', (req, res) => {
-    const { category } = req.query
+    const { category, rating } = req.query
     console.log(req.query, category)
-    const result = products.filter((pd) => pd.category === category)
-    res.send(result)
+    let filteredProducts = products //copy by reference
+    if (category) {
+        filteredProducts = filteredProducts.filter((pd) => pd.category === category)
+    }
+    if (rating) {
+        filteredProducts = filteredProducts.filter((pd) => pd.rating === +rating)
+    }
+    res.send(filteredProducts)
 })
 
 
 //get products by ID
-app.get('/products/:id', (req, res) => {
+app.get('/products/:id', async (req, res) => {
     const { id } = req.params
     console.log(req.params, id)
-    const product = products.find((pd) => pd.id === id)
+    //db.products.findOne({id: "1"})
+    const product = await client.db("b52-wd-node").collection("products").findOne({ id: id })
+    // const product = products.find((pd) => pd.id === id)
+    product ? res.send(product) : res.status(404).send({ message: "No product found" })
+})
+
+
+
+//delete products by ID
+app.delete('/products/:id', async (req, res) => {
+    const { id } = req.params
+    console.log(req.params, id)
+    //db.products.findOne({id: "1"})
+    const product = await client.db("b52-wd-node").collection("products").deleteOne({ id: id })
+    // const product = products.find((pd) => pd.id === id)
     res.send(product)
 })
 

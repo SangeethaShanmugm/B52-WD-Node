@@ -1,0 +1,15 @@
+let filteredProducts = products //copy by reference
+    if (category) {
+        filteredProducts = filteredProducts.filter((pd) => pd.category === category)
+    }
+    if (rating) {
+        filteredProducts = filteredProducts.filter((pd) => pd.rating === +rating)
+    }
+
+
+
+    
+// /products => all the products ✅
+// /products?category=mobile => only mobile products ✅
+// /products?rating=4.5 =< only products with rating 4.5  ✅
+// /products?category=accessories&rating=4.5 => filter accessories & filter based on rating   ✅

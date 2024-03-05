@@ -4,9 +4,11 @@ import express from "express";
 import { MongoClient } from "mongodb"
 import * as dotenv from 'dotenv'
 import { productsRoute } from "./routes/products.js";
-dotenv.config()
+
 
 const app = express()
+
+dotenv.config()
 const PORT = process.env.PORT
 
 // console.log(process.env.MONGO_URL)
@@ -14,6 +16,7 @@ const PORT = process.env.PORT
 //Inbuilt middleware
 //Interceptor ||  Converting body to JSON
 app.use(express.json())
+
 
 const MONGO_URL = process.env.MONGO_URL
 //"mongodb://127.0.0.1:27017"

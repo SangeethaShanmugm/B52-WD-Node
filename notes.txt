@@ -13,3 +13,9 @@ let filteredProducts = products //copy by reference
 // /products?category=mobile => only mobile products ✅
 // /products?rating=4.5 =< only products with rating 4.5  ✅
 // /products?category=accessories&rating=4.5 => filter accessories & filter based on rating   ✅
+
+
+
+git rm .env --cached
+
+git commit -m "Stop tracking .env"

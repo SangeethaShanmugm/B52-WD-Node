@@ -2,13 +2,15 @@
 // const { MongoClient } = require('mongodb');
 import express from "express";
 import { MongoClient } from "mongodb"
-import * as dotenv from 'dotenv'
+import * as dotenv from 'dotenv';
+import cors from "cors"
 import { productsRoute } from "./routes/products.js";
 
 
 const app = express()
 
 dotenv.config()
+
 const PORT = process.env.PORT
 
 // console.log(process.env.MONGO_URL)
@@ -16,6 +18,7 @@ const PORT = process.env.PORT
 //Inbuilt middleware
 //Interceptor ||  Converting body to JSON
 app.use(express.json())
+app.use(cors())
 
 
 const MONGO_URL = process.env.MONGO_URL

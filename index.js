@@ -5,8 +5,7 @@ import { MongoClient } from "mongodb"
 import * as dotenv from 'dotenv';
 import cors from "cors"
 import { productsRoute } from "./routes/products.js";
-
-
+import { usersRoute } from "./routes/users.js";
 const app = express()
 
 dotenv.config()
@@ -42,7 +41,8 @@ app.get('/', (req, res) => {
 
 app.use("/products", productsRoute)
 
-app.listen(PORT, () => console.log("Server listening on port", PORT))
+app.use("/users", usersRoute)
 
+app.listen(PORT, () => console.log("Server listening on port", PORT))
 
 

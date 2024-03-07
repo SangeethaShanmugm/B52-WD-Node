@@ -1,6 +1,6 @@
 import express from "express"
 import { getAllProducts, getProductById, deleteProductById, addProducts, updateProducts } from "../helper.js";
-
+import { auth } from "../middleware/auth.js"
 const router = express.Router()
 
 //REST API Endpoints
